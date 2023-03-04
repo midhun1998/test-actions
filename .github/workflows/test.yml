@@ -53,22 +53,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Gather Docker Metadata for Tracking
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          # list of Docker images to use as base name for tags
-          images: |
-            ghcr.io/midhun1998/mlflow
-          # generate Docker tags based on the following events/attributes
-          tags: |
-            type=ref,event=tag
       - name: Build and Push Base Image
         uses: docker/build-push-action@v3
         with:
           context: docker
           push: true
-          tags: latest
+          tags: ghcr.io/midhun1998/mlflow:latest
           build-args: |
-            VERSION=${{ steps.meta.outputs.version }}
+            VERSION=v2.2.1
 
